@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "result": {
+    "message_id": 99,
+    "from": {
+      "id": 1234567890,
+      "is_bot": true,
+      "first_name": "from_first_name",
+      "username": "from_username"
+    },
+    "chat": {
+      "id": 987654321,
+      "first_name": "first_name",
+      "last_name": "last_name",
+      "username": "username",
+      "type": "private"
+    },
+    "date": 1659166516,
+    "text": "hello"
+  }
+}
