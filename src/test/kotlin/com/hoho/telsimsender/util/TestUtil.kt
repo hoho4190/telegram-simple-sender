@@ -5,7 +5,6 @@ import com.hoho.telsimsender.dto.TelegramInfo
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import retrofit2.Response
 
 internal object TestUtil {
 
@@ -24,16 +23,11 @@ internal object TestUtil {
         json.decodeFromString(FileUtil.readResource(TELEGRAM_INFO_RES_FILE_NAME))
 
     /**
-     * Convert Response to pretty String.
+     * Convert SendResponse to pretty String.
      *
-     * @param response
+     * @param sendResponse
      */
-    inline fun <reified T> convertResToPrettyStr(response: Response<T>): String {
-        return if (response.isSuccessful) {
-            json.encodeToString(response.body())
-        } else {
-            val sendResponse = json.decodeFromString<SendResponse>(response.errorBody()!!.string())
-            json.encodeToString(sendResponse)
-        }
-    }
+    @JvmStatic
+    fun convertSendResToPrettyStr(sendResponse: SendResponse): String =
+        json.encodeToString(sendResponse)
 }

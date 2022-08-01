@@ -5,7 +5,7 @@
 # Telegram simple sender
 Telegram simple message sender using [Retrofit](https://square.github.io/retrofit/)
 
-## [Download](https://jitpack.io/#hoho4190/telegram-simple-sender)
+## [Dependency](https://jitpack.io/#hoho4190/telegram-simple-sender)
 - Step 1. Add the JitPack repository to your build file
   ```kotlin
   allprojects {
@@ -25,48 +25,53 @@ Telegram simple message sender using [Retrofit](https://square.github.io/retrofi
   ```
 
 ## Usage
-1. Create TelegramInfo instance.
-    ```kotlin
-    val telegramInfo = TelegramInfo(TOKEN)
-    val telegramInfo = TelegramInfo(TOKEN, CHAT_ID)
-    val telegramInfo = TelegramInfo(TOKEN, CHAT_IDS)
-    ```
+```kotlin
+// 1. Create TelegramInfo instance.
+val telegramInfo = TelegramInfo(TOKEN)
+val telegramInfo = TelegramInfo(TOKEN, CHAT_ID)
+val telegramInfo = TelegramInfo(TOKEN, CHAT_IDS)
 
-2. Set telegram info in the XXXSender.
-    ```kotlin
-    // telegramSender
-    val telegramSender = TelegramSender(telegramInfo)
-    
-    // TelegramSimpleSender
-    TelegramSimpleSender.setup(telegramInfo)
-    ```
 
-3. Call the message sending method.
-    ```kotlin
-    // telegramSender
-    val call = telegramSender.sendMessage(message)
-    
-    // TelegramSimpleSender
-    val call = TelegramSimpleSender.sendMessage(message)
-    
-    // message sending methods
-    XXXSender.sendMessage(message)
-    XXXSender.sendMessage(message, chatId)
-    XXXSender.sendAllMessage(message)
-    XXXSender.sendAllMessage(message, chatIds)
-    ```
+// 2. Set telegram info in the XXXSender.
+// telegramSender
+val telegramSender = TelegramSender(telegramInfo)
 
+// TelegramSimpleSender
+TelegramSimpleSender.setup(telegramInfo)
+
+
+// 3. Call the message sending method.
+// telegramSender
+val call = telegramSender.sendMessage(message)
+
+// TelegramSimpleSender
+val call = TelegramSimpleSender.sendMessage(message)
+
+
+// 4. Synchronous call or Asynchronous call
+// Synchronous call
+val response = call.execute()
+// Asynchronous call
+call.enqueue(object : Callback<SendResponse> { ... }
+
+
+// 5. Get a response.
+val sendResponse = SendResponse.from(response)
+```
+
+- message sending methods
+  - `sendMessage(message)`
+  - `sendMessage(message, chatId)`
+  - `sendAllMessage(message)`
+  - `sendAllMessage(message, chatIds)`
+  
 ### Synchronous call
 - Kotlin
     ```kotlin
     val call = telegramSender.sendMessage(message)
     val response = call.execute()
     
-    if (response.isSuccessful) {
-        val data = response.body()
-    } else {
-        val errorBody = response.errorBody()
-    }
+    val sendResponse = SendResponse.from(response)
     ```
 
 - Java
@@ -74,11 +79,7 @@ Telegram simple message sender using [Retrofit](https://square.github.io/retrofi
     Call<SendResponse> call = telegramSender.sendMessage(message);
     Response<SendResponse> response = call.execute();
     
-    if (response.isSuccessful()) {
-        SendResponse data = response.body();
-    } else {
-        ResponseBody errorBody = response.errorBody();
-    }
+    SendResponse sendResponse = SendResponse.from(response);
     ```
 
 ### Asynchronous call
@@ -88,11 +89,7 @@ Telegram simple message sender using [Retrofit](https://square.github.io/retrofi
     call.enqueue(object : Callback<SendResponse> {
     
         override fun onResponse(call: Call<SendResponse>, response: Response<SendResponse>) {
-            if (response.isSuccessful) {
-                val data = response.body()
-            } else {
-                val errorBody = response.errorBody()
-            }
+            val sendResponse = SendResponse.from(response)
         }
     
         override fun onFailure(call: Call<SendResponse>, t: Throwable) {
@@ -108,11 +105,7 @@ Telegram simple message sender using [Retrofit](https://square.github.io/retrofi
         
         @Override
         public void onResponse(Call<SendResponse> call, Response<SendResponse> response) {
-            if (response.isSuccessful()) {
-                SendResponse data = response.body();
-            } else {
-                ResponseBody errorBody = response.errorBody();
-            }
+            SendResponse sendResponse = SendResponse.from(response);
         }
     
         @Override

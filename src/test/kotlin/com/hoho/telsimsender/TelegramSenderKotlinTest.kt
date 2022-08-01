@@ -35,7 +35,8 @@ internal class TelegramSenderKotlinTest {
 
         // Then
         println("url: ${response.raw().request().url()}")
-        println(TestUtil.convertResToPrettyStr(response))
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertTrue(response.isSuccessful)
     }
 
@@ -54,7 +55,8 @@ internal class TelegramSenderKotlinTest {
             // Then
             override fun onResponse(call: Call<SendResponse>, response: Response<SendResponse>) {
                 println("url: ${response.raw().request().url()}")
-                println(TestUtil.convertResToPrettyStr(response))
+                val sendResponse = SendResponse.from(response)
+                println(TestUtil.convertSendResToPrettyStr(sendResponse))
                 Assertions.assertTrue(response.isSuccessful)
             }
 
@@ -63,7 +65,7 @@ internal class TelegramSenderKotlinTest {
             }
         })
 
-        Thread.sleep(1000L)
+        Thread.sleep(2000L)
     }
 
     @Disabled
@@ -82,7 +84,8 @@ internal class TelegramSenderKotlinTest {
         Assertions.assertAll(
             responseList.map { response ->
                 println("url: ${response.raw().request().url()}")
-                println(TestUtil.convertResToPrettyStr(response))
+                val sendResponse = SendResponse.from(response)
+                println(TestUtil.convertSendResToPrettyStr(sendResponse))
                 Executable { Assertions.assertTrue(response.isSuccessful) }
             }
         )

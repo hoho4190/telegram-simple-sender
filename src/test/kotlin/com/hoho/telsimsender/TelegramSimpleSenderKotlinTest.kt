@@ -1,5 +1,6 @@
 package com.hoho.telsimsender
 
+import com.hoho.telsimsender.dto.SendResponse
 import com.hoho.telsimsender.dto.TelegramInfo
 import com.hoho.telsimsender.util.TestUtil
 import org.junit.jupiter.api.*
@@ -31,7 +32,8 @@ internal class TelegramSimpleSenderKotlinTest {
 
         // Then
         println("url: ${response.raw().request().url()}")
-        println(TestUtil.convertResToPrettyStr(response))
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertTrue(response.isSuccessful)
     }
 
@@ -51,7 +53,8 @@ internal class TelegramSimpleSenderKotlinTest {
         Assertions.assertAll(
             responseList.map { response ->
                 println("url: ${response.raw().request().url()}")
-                println(TestUtil.convertResToPrettyStr(response))
+                val sendResponse = SendResponse.from(response)
+                println(TestUtil.convertSendResToPrettyStr(sendResponse))
                 Executable { Assertions.assertTrue(response.isSuccessful) }
             }
         )
