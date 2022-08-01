@@ -56,8 +56,9 @@ internal class MessageServiceTest {
         val response = call.execute()
 
         // Then
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertTrue(response.isSuccessful)
-        println(TestUtil.convertResToPrettyStr(response))
     }
 
     @Test
@@ -77,8 +78,9 @@ internal class MessageServiceTest {
 
             // Then
             override fun onResponse(call: Call<SendResponse>, response: Response<SendResponse>) {
+                val sendResponse = SendResponse.from(response)
+                println(TestUtil.convertSendResToPrettyStr(sendResponse))
                 Assertions.assertTrue(response.isSuccessful)
-                println(TestUtil.convertResToPrettyStr(response))
             }
 
             override fun onFailure(call: Call<SendResponse>, t: Throwable) {
@@ -86,7 +88,7 @@ internal class MessageServiceTest {
             }
         })
 
-        Thread.sleep(500L)
+        Thread.sleep(2000L)
     }
 
     @Test
@@ -105,8 +107,9 @@ internal class MessageServiceTest {
         val response = call.execute()
 
         // Then
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertFalse(response.isSuccessful)
-        println(TestUtil.convertResToPrettyStr(response))
     }
 
     @Test
@@ -126,8 +129,9 @@ internal class MessageServiceTest {
 
             // Then
             override fun onResponse(call: Call<SendResponse>, response: Response<SendResponse>) {
+                val sendResponse = SendResponse.from(response)
+                println(TestUtil.convertSendResToPrettyStr(sendResponse))
                 Assertions.assertFalse(response.isSuccessful)
-                println(TestUtil.convertResToPrettyStr(response))
             }
 
             override fun onFailure(call: Call<SendResponse>, t: Throwable) {
@@ -135,7 +139,7 @@ internal class MessageServiceTest {
             }
         })
 
-        Thread.sleep(500L)
+        Thread.sleep(2000L)
     }
 
     @Test
@@ -154,8 +158,9 @@ internal class MessageServiceTest {
         val response = call.execute()
 
         // Then
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertFalse(response.isSuccessful)
-        println(TestUtil.convertResToPrettyStr(response))
     }
 
     @Test
@@ -174,8 +179,9 @@ internal class MessageServiceTest {
         val response = call.execute()
 
         // Then
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertFalse(response.isSuccessful)
-        println(TestUtil.convertResToPrettyStr(response))
     }
 
     @Test
@@ -194,7 +200,8 @@ internal class MessageServiceTest {
         val response = call.execute()
 
         // Then
+        val sendResponse = SendResponse.from(response)
+        println(TestUtil.convertSendResToPrettyStr(sendResponse))
         Assertions.assertFalse(response.isSuccessful)
-        println(TestUtil.convertResToPrettyStr(response))
     }
 }

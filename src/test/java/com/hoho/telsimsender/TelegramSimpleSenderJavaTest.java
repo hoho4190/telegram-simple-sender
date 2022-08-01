@@ -36,13 +36,8 @@ public class TelegramSimpleSenderJavaTest {
         Response<SendResponse> response = call.execute();
 
         // Then
-        System.out.println("url: " + response.raw().request().url());
-        if (response.isSuccessful()) {
-            SendResponse result = response.body();
-            System.out.println(result);
-        } else {
-            System.out.println(response.errorBody());
-        }
+        SendResponse sendResponse = SendResponse.from(response);
+        System.out.println(TestUtil.convertSendResToPrettyStr(sendResponse));
         Assertions.assertTrue(response.isSuccessful());
     }
 
@@ -67,13 +62,8 @@ public class TelegramSimpleSenderJavaTest {
         // Then
         Assertions.assertAll(
                 responseList.stream().map(response -> {
-                    System.out.println("url: " + response.raw().request().url());
-                    if (response.isSuccessful()) {
-                        SendResponse result = response.body();
-                        System.out.println(result);
-                    } else {
-                        System.out.println(response.errorBody());
-                    }
+                    SendResponse sendResponse = SendResponse.from(response);
+                    System.out.println(TestUtil.convertSendResToPrettyStr(sendResponse));
                     return () -> Assertions.assertTrue(response.isSuccessful());
                 })
         );

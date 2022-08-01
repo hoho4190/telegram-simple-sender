@@ -37,12 +37,8 @@ public class TelegramSenderJavaTest {
         Response<SendResponse> response = call.execute();
 
         // Then
-        System.out.println("url: " + response.raw().request().url());
-        if (response.isSuccessful()) {
-            System.out.println(response.body());
-        } else {
-            System.out.println(response.errorBody());
-        }
+        SendResponse sendResponse = SendResponse.from(response);
+        System.out.println(TestUtil.convertSendResToPrettyStr(sendResponse));
         Assertions.assertTrue(response.isSuccessful());
     }
 
@@ -61,12 +57,8 @@ public class TelegramSenderJavaTest {
             // Then
             @Override
             public void onResponse(Call<SendResponse> call, Response<SendResponse> response) {
-                System.out.println("url: " + response.raw().request().url());
-                if (response.isSuccessful()) {
-                    System.out.println(response.body());
-                } else {
-                    System.out.println(response.errorBody());
-                }
+                SendResponse sendResponse = SendResponse.from(response);
+                System.out.println(TestUtil.convertSendResToPrettyStr(sendResponse));
                 Assertions.assertTrue(response.isSuccessful());
             }
 
@@ -76,7 +68,7 @@ public class TelegramSenderJavaTest {
             }
         });
 
-        Thread.sleep(1000L);
+        Thread.sleep(2000L);
     }
 
     @Disabled
@@ -100,12 +92,8 @@ public class TelegramSenderJavaTest {
         // Then
         Assertions.assertAll(
                 responseList.stream().map(response -> {
-                    System.out.println("url: " + response.raw().request().url());
-                    if (response.isSuccessful()) {
-                        System.out.println(response.body());
-                    } else {
-                        System.out.println(response.errorBody());
-                    }
+                    SendResponse sendResponse = SendResponse.from(response);
+                    System.out.println(TestUtil.convertSendResToPrettyStr(sendResponse));
                     return () -> Assertions.assertTrue(response.isSuccessful());
                 })
         );
